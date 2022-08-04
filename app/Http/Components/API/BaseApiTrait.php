@@ -16,18 +16,20 @@ trait BaseApiTrait{
 
     }
 
-    public function handleError($error, $errorMsg = [], $code = 404){
+    public function handleError($error = []){
+
+        $error = [
+            'code'  => 404,
+            'msg'   => 'Not found.'
+        ];
 
         $res    =   [
             'success'   => false,
-            'message'   => $error
+            'message'   => $error['msg'],
+            'data'      => null
         ];
 
-        if(!empty($errorMsg)){
-            $res['data']    = $errorMsg;
-        }
-
-        return response()->json($res, $code);
+        return response()->json($res, $error['code']);
     }
     
     public function apiActionMessage($item_name, $action){
@@ -49,28 +51,46 @@ trait BaseApiTrait{
 
 
     public function apiDataNotAuthorized($message = null){
-        return 'Sorry, you are not authorized'.$message;
+        return [
+            'code'  => 404,
+            'msg'   =>'Sorry, you are not authorized'.$message
+        ];
     }
 
 
     public function apiDataListed($item_name){
-        return $this->apiActionMessage($item_name, ' listed');
+        return [
+            'code'  => 404,
+            'msg'   =>$this->apiActionMessage($item_name, ' listed')
+        ];
     }
 
     public function apiDataShown($item_name){
-        return $this->apiActionMessage($item_name, ' shown');
+        return [
+            'code'  => 404,
+            'msg'   =>$this->apiActionMessage($item_name, ' shown')
+        ];
     }
 
     public function apiDataInserted($item_name, $reverse = ""){
-        return $this->apiActionMessage($item_name, $reverse.' inserted');
+        return [
+            'code'  => 404,
+            'msg'   =>$this->apiActionMessage($item_name, $reverse.' inserted')
+        ];
     }
 
     public function apiDataUpdated($item_name, $reverse = ""){
-        return $this->apiActionMessage($item_name, $reverse.' updated');
+        return [
+            'code'  => 404,
+            'msg'   =>$this->apiActionMessage($item_name, $reverse.' updated')
+        ];
     }
 
     public function apiDataDeleted($item_name, $reverse = ""){
-        return $this->apiActionMessage($item_name, $reverse.' deleted');
+        return [
+            'code'  => 404,
+            'msg'   =>$this->apiActionMessage($item_name, $reverse.' deleted')
+        ];
     }
 
 

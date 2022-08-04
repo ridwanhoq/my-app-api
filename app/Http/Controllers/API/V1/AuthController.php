@@ -31,6 +31,8 @@ class AuthController extends Controller
             $success['name']        = $auth_user->name;
 
             return  $this->handleResponse($success, 'User logged in.');
+        }else{
+            return $this->handleError($this->apiDataNotAuthorized());
         }
     }
 
