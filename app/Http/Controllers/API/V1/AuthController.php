@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API\V1;
 
+use App\Http\Controllers\Controller;
 use App\Http\Components\API\BaseApiTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -37,9 +38,9 @@ class AuthController extends Controller
             return $this->handleError($validator->errors());
         }
 
-        $input  = $request->all();
-        $input['password']  = bcrypt($input['password']);
-        $user   = User::create($input);
+        $input                  = $request->all();
+        $input['password']      = bcrypt($input['password']);
+        $user                   = User::create($input);
         $success['api_token']   = $user->createToken('UseAnyStringHere')->plainTextToken();
         $success['name']        = $user->name;
 
